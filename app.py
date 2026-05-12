@@ -1,34 +1,19 @@
-from flask import Flask, render_template, request, redirect, session, jsonify
+from flask import Flask
 import pymysql
-from werkzeug.security import generate_password_hash, check_password_hash
-from werkzeug.utils import secure_filename
 import os
 
 app = Flask(__name__)
-app.secret_key = "parking_secret_key"
 
-# =========================
-# UPLOAD FOLDER
-# =========================
-
-UPLOAD_FOLDER = "static/uploads"
-
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
-
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
-# =========================
-# DATABASE RAILWAY
-# =========================
-
-db = MySQLdb.connect(
-    host=os.getenv("MYSQLHOST", "localhost"),
-    user=os.getenv("MYSQLUSER", "root"),
-    passwd=os.getenv("MYSQLPASSWORD", ""),
-    db=os.getenv("MYSQLDATABASE", "test"),
-    port=int(os.getenv("MYSQLPORT", 3306)),
+# koneksi database Railway
+db = pymysql.connect(
+    host=os.getenv("MYSQLHOST"),
+    user=os.getenv("MYSQLUSER"),
+    password=os.getenv("MYSQLPASSWORD"),
+    database=os.getenv("MYSQLDATABASE"),
+    port=int(os.getenv("MYSQLPORT"))
 )
+
+cursor = db.cursor()
 
 # =========================
 # AUTO CREATE ADMIN
