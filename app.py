@@ -22,13 +22,12 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 # DATABASE RAILWAY
 # =========================
 
-db = pymysql.connect(
-    host=os.getenv("MYSQLHOST"),
-    user=os.getenv("MYSQLUSER"),
-    password=os.getenv("MYSQLPASSWORD"),
-    database=os.getenv("MYSQLDATABASE"),
-    port=int(os.getenv("MYSQLPORT")),
-    cursorclass=pymysql.cursors.DictCursor
+db = MySQLdb.connect(
+    host=os.getenv("MYSQLHOST", "localhost"),
+    user=os.getenv("MYSQLUSER", "root"),
+    passwd=os.getenv("MYSQLPASSWORD", ""),
+    db=os.getenv("MYSQLDATABASE", "test"),
+    port=int(os.getenv("MYSQLPORT", 3306)),
 )
 
 # =========================
